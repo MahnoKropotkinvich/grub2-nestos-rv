@@ -17,7 +17,7 @@
 Name:		grub2
 Epoch:		1
 Version:	2.12
-Release:	8%{?dist}
+Release:	9%{?dist}
 Summary:	Bootloader with support for Linux, Multiboot and more
 License:	GPL-3.0-or-later
 URL:		http://www.gnu.org/software/grub/
@@ -562,6 +562,9 @@ mv ${EFI_HOME}/grub.cfg.stb ${EFI_HOME}/grub.cfg
 %endif
 
 %changelog
+* Thu Nov 21 2024 Peter Jones <pjones@redhat.com> - 2.12-9
+- Rebuild to see if the builder is fixed
+
 * Wed Sep 25 2024 Nicolas Frayer <nfrayer@redhat.com> 2.12-8
 - NX: efi/loader, add a call to grub_efi_check_nx_required()
 
