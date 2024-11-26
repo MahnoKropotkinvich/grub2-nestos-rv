@@ -17,7 +17,7 @@
 Name:		grub2
 Epoch:		1
 Version:	2.12
-Release:	9%{?dist}
+Release:	10%{?dist}
 Summary:	Bootloader with support for Linux, Multiboot and more
 License:	GPL-3.0-or-later
 URL:		http://www.gnu.org/software/grub/
@@ -562,6 +562,10 @@ mv ${EFI_HOME}/grub.cfg.stb ${EFI_HOME}/grub.cfg
 %endif
 
 %changelog
+* Mon Dic 02 2024 Marta Lewandowska <mlewando@redhat.com> - 2.12-10
+- 99-grub-mkconfig.install: Disable BLS and run grub2-mkconfig when GRUB_ENABLE_BLSCFG is disable
+- Resolves: #2325960
+
 * Thu Nov 21 2024 Peter Jones <pjones@redhat.com> - 2.12-9
 - Rebuild to see if the builder is fixed
 
