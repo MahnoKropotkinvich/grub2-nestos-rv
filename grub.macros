@@ -878,6 +878,7 @@ ln -s ../boot/grub2/grub.cfg					\\\
 %defattr(-,root,root,-)						\
 %config(noreplace) %{_sysconfdir}/grub2.cfg			\
 %config(noreplace) %{_sysconfdir}/grub2-efi.cfg		\
+%ghost %attr(0700,root,root) %verify(not mtime) %{efi_esp_dir}/%{2} \
 %attr(0700,root,root) %{grub_efi_dir}/%{2} 	\
 %{_prefix}/lib/bootloader/install_bootloader                    \
 %ifarch %{arm}							\
@@ -904,6 +905,7 @@ ln -s ../boot/grub2/grub.cfg					\\\
 								\
 %{expand:%%files %{1}-cdboot}					\
 %defattr(-,root,root,-)						\
+%ghost %attr(0700,root,root) %verify(not mtime) %{efi_esp_dir}/%{3}	\
 %attr(0700,root,root) %{grub_efi_dir}/%{3}	\
 %attr(0700,root,root)/boot/grub2/fonts			\
 %{nil}
