@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -euo pipefail
+# set -x
+
 if [[ $# -lt 2 ]]; then
   echo "usage: $0 from_dir efi_dir"
   exit 1
@@ -8,4 +11,4 @@ fi
 from_dir=${1}
 efi_dir=${2}
 
-cp ${from_dir}/* ${efi_dir}/
+cp "${from_dir}/"* "${efi_dir}/"
