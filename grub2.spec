@@ -432,7 +432,10 @@ mv ${EFI_HOME}/grub.cfg.stb ${EFI_HOME}/grub.cfg || :
 
 %if 0%{with_efi_arch}
 %posttrans efi-%{efiarch}
-/usr/lib/bootloader/install_bootloader %{grub_efi_dir} %{efi_esp_dir} || :
+# On image mode, bootupd takes care of installing bootloader updates to the ESP
+if [[ ! -e "/run/ostree-booted" ]]; then
+    /usr/lib/bootloader/install_bootloader %{grub_efi_dir} %{efi_esp_dir} || :
+fi
 %endif
 
 %files common -f grub.lang
