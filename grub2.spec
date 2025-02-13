@@ -17,7 +17,7 @@
 Name:		grub2
 Epoch:		1
 Version:	2.12
-Release:	23%{?dist}
+Release:	24%{?dist}
 Summary:	Bootloader with support for Linux, Multiboot and more
 License:	GPL-3.0-or-later
 URL:		http://www.gnu.org/software/grub/
@@ -605,6 +605,14 @@ mv ${EFI_HOME}/grub.cfg.stb ${EFI_HOME}/grub.cfg || :
 %endif
 
 %changelog
+* Tue Feb 18 2025 Leo Sandoval <lsandova@redhat.com> - 2.12-24
+- Add Several CVE fixes
+- Resolves: CVE-2024-45781 CVE-2024-45783 CVE-2024-45778
+- Resolves: CVE-2024-45775 CVE-2024-45780 CVE-2024-45774
+- Resolves: CVE-2025-0690 CVE-2025-1118 CVE-2024-45782
+- Resolves: CVE-2025-0624 CVE-2024-45779 CVE-2024-45776
+- Resolves: CVE-2025-0622 CVE-2025-0677
+
 * Tue Feb 11 2025 Nicolas Frayer <nfrayer@redhat.com> 2.12-23
 - Revert commit for bootloader update proposal for now as not all components are ready
 
