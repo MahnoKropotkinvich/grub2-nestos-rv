@@ -17,7 +17,7 @@
 Name:		grub2
 Epoch:		1
 Version:	2.12
-Release:	40%{?dist}
+Release:	41%{?dist}
 Summary:	Bootloader with support for Linux, Multiboot and more
 License:	GPL-3.0-or-later
 URL:		http://www.gnu.org/software/grub/
@@ -384,6 +384,75 @@ fi
 # to a preset, apply the preset when upgrading from pre-preset versions
 /usr/lib/systemd/systemd-update-helper install-user-units grub-boot-success.timer
 
+%if 0%{with_alt_efi_arch}
+%posttrans pc
+set -eu
+set -o pipefail
+
+SYS_FIRMWARE_EFI_DIR=/sys/firmware/efi
+BOOT_DIR=/boot
+
+find_grub_devices() {
+    local boot_device
+    local component_devs=()
+    local block_devs=()
+
+    # Exit if UEFI system running
+    if test -d $SYS_FIRMWARE_EFI_DIR ; then
+	exit 0
+    fi
+
+    # grub2-probe is required for device finding
+    if ! command -v grub2-probe &>/dev/null; then
+	exit 0;
+    fi
+
+    # Get block devices where GRUB is located. We assume GRUB is on the same device
+    # as /boot partition is. In case that device is an md (Multiple Device) device, all
+    # of the component devices of such a device are considered.
+    boot_device=$(grub2-probe --target=device $BOOT_DIR)
+
+    # Check if a given device is an md (Multiple Device) device
+    # It is expected that the "mdadm" command is available,
+    # if it's not it is assumed the device is not an md device.
+    if command -v mdadm &>/dev/null && \
+       mdadm --detail --verbose --brief "$boot_device" &> /dev/null; then
+	out=$(mdadm --detail --verbose --brief "$boot_device")
+	# output would look like:
+	#    ARRAY /dev/md0 level=raid1 num-devices=2 metadata=1.2 name=localhost.localdomain:0 UUID=c4acea6e:d56e1598:91822e3f:fb26832c disable=line-too-long devices=/dev/vda1,/dev/vdb1
+	for d in $(echo "$out" | sed -n -e 's/.* devices=\([^ ]*\).*/\1/p' | sed 's/,/ /g'); do
+	    component_devs+=("$d")
+	done
+    else
+	component_devs+=("$boot_device")
+    fi
+
+    # Get blocks from partitions
+    for d in "${component_devs[@]}"; do
+	block_devs+=("$(lsblk -spnlo name "$d" | tail -1)")
+    done
+
+    # Filter those GRUB blocks
+    for d in "${block_devs[@]}"; do
+	if dd if="$d" bs=446 count=1 status=none | grep -aq "GRUB"; then
+	    echo "$d"
+	fi
+    done
+}
+
+grub_install () {
+    if ! command -v grub2-install &>/dev/null; then
+	exit 0
+    fi
+    for d in $(find_grub_devices); do
+	echo "Installing on $d" >&2
+	grub2-install "$d"
+    done
+}
+
+grub_install || :
+%endif
+
 %posttrans common
 set -eu
 
@@ -598,11 +667,14 @@ fi
 %endif
 
 %changelog
+* Mon Aug 18 2025 Leo Sandoval <lsandova@redhat.com> - 2.12-41
+- Run grub2-install on grub2-pc posttrans
+
 * Wed Aug 6 2025 Jan Stancek <jstancek@redhat.com> - 2.12-40
 - 55-set-boot-entry.install: fix initrd check
 - Resolves: #2386118
 
-* Tue Jul 15 2025 FeRD (Frank Dana) <ferdnyc@gmail.com> - 2.12-39
+* Fri Aug 01 2025 FeRD (Frank Dana) <ferdnyc@gmail.com> - 2.12-39
 - kernel-install: Suppress warnings about missing /etc/default/grub
   file when attempting to grep its contents
 
