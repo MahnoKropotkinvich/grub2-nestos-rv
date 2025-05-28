@@ -363,3 +363,5 @@ Patch0363: 0363-ieee1275-ofnet-Fix-grub_malloc-removed-after-added-s.patch
 Patch0364: 0364-powerpc-increase-MIN-RMA-size-for-CAS-negotiation.patch
 Patch0365: 0365-10_linux.in-escape-kernel-option-characters-properly.patch
 Patch0366: 0366-blscfg-check-if-variable-is-escaped-before-consideri.patch
+Patch0367: 0367-loader-efi-chainloader-Fix-double-free.patch
+Patch0368: 0368-loader-efi-chainloader-Fix-null-pointer-dereference.patch
