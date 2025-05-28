@@ -357,3 +357,5 @@ Patch0357: 0357-fs-ext2-Rework-out-of-bounds-read-for-inline-and-ext.patch
 Patch0358: 0358-ieee1275-ofnet-Fix-grub_malloc-removed-after-added-s.patch
 Patch0359: 0359-10_linux.in-escape-kernel-option-characters-properly.patch
 Patch0360: 0360-blscfg-check-if-variable-is-escaped-before-consideri.patch
+Patch0361: 0361-loader-efi-chainloader-Fix-double-free.patch
+Patch0362: 0362-loader-efi-chainloader-Fix-null-pointer-dereference.patch
