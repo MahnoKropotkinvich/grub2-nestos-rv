@@ -63,7 +63,7 @@ BuildRequires:	texinfo
 BuildRequires:	xz-devel
 
 # For %%_userunitdir and %%systemd_* macros
-BuildRequires:	systemd-rpm-macros
+BuildRequires:	systemd
 
 %ifarch %{efi_arch}
 BuildRequires:	pesign >= 0.99-8
