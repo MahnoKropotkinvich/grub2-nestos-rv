@@ -65,9 +65,7 @@ BuildRequires:	xz-devel
 # For %%_userunitdir and %%systemd_* macros
 BuildRequires:	systemd
 
-%ifarch %{efi_arch}
-BuildRequires:	pesign >= 0.99-8
-%endif
+BuildRequires:	pesign 
 
 %if %{?_with_ccache: 1}%{?!_with_ccache: 0}
 BuildRequires:	ccache
