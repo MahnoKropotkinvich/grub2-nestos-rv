@@ -24,7 +24,7 @@ URL:		http://www.gnu.org/software/grub/
 Obsoletes:	grub < 1:0.98
 Source0:	https://ftp.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
 Source1:	grub.macros
-Source2:	gnulib-%{gnulibversion}.tar.gz
+Source2:	https://github.com/coreutils/gnulib/archive/%{gnulibversion}.tar.gz
 Source3:	99-grub-mkconfig.install
 Source4:	http://unifoundry.com/pub/unifont/unifont-13.0.06/font-builds/unifont-13.0.06.pcf.gz
 Source5:	theme.tar.bz2
