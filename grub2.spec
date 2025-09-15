@@ -22,7 +22,7 @@ Summary:	Bootloader with support for Linux, Multiboot and more
 License:	GPL-3.0-or-later
 URL:		http://www.gnu.org/software/grub/
 Obsoletes:	grub < 1:0.98
-Source0:	https://ftp.gnu.org/gnu/grub/grub-%{tarversion}.tar.xz
+Source0:	https://mirrors.aliyun.com/gnu/grub/grub-%{tarversion}.tar.xz
 Source1:	grub.macros
 Source2:	https://github.com/coreutils/gnulib/archive/%{gnulibversion}.tar.gz
 Source3:	99-grub-mkconfig.install
